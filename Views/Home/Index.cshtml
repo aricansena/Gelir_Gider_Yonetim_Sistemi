@@ -1,0 +1,210 @@
+﻿﻿@{
+    ViewBag.Title = "Home Page";
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
+<div class="container text-center m-2">
+    <div class="row align-items-center">
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 ">
+            <div style="min-height: 350px">
+                <canvas id="myChart1" height="300"></canvas>
+                <script>
+                    const yillikGelirTutarlariToplami = @ViewBag.YillikGelirTutarlariToplami ;
+                    const yillikGiderTutarlariToplami = @ViewBag.YillikGiderTutarlariToplami ;
+
+                    const ctx1 = document.getElementById('myChart1').getContext('2d');
+                    const myChart1 = new Chart(ctx1, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Gelir', 'Gider'],
+                            datasets: [{
+                                label: ['Yılık Gelir Gider'],
+                                data: [yillikGelirTutarlariToplami, yillikGiderTutarlariToplami],
+                                backgroundColor: [
+                                    'rgba(26,54,99,0.7)',
+                                    'rgba(244,130,32,0.7)'
+                                ],
+                                borderColor: [
+                                    'rgb(26,54,99)',
+                                    'rgb(244,130,32)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            onClick: function (event, elements) {
+                                if (elements.length > 0) {
+                                    window.location.href = '@Url.Action("Rapor", "Rapor")';
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+
+                                }
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+            <div style="min-height: 350px;">
+                <canvas id="myChart3" height="300"></canvas>
+                <script>
+             const aylikGelirTutarlariToplami = @ViewBag.AylikGelirTutarlariToplami;
+             const aylikGiderTutarlariToplami = @ViewBag.AylikGiderTutarlariToplami;
+             const ctx3 = document.getElementById('myChart3').getContext('2d');
+
+             new Chart(ctx3, {
+                 type: 'bar',
+                 data: {
+                     labels: ['Gelir', 'Gider'],
+
+                     datasets: [{
+                         label: 'Aylik Gelir Gider',
+                         data: [aylikGelirTutarlariToplami, aylikGiderTutarlariToplami],
+                         backgroundColor: [
+                             'rgba(26,54,99,0.7)',
+                             'rgba(244,130,32,0.7)'
+                         ],
+                         borderColor: [
+                             'rgb(26,54,99)',
+                             'rgb(244,130,32)'
+                         ],
+                         borderWidth: 1
+                     }]
+                 },
+                 options: {
+                     scales: {
+                         y: {
+                             beginAtZero: true
+                         }
+                     }
+                 }
+             });
+                </script>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+            <div style="min-height: 350px;">
+                <canvas id="myChart2" height="300"></canvas>
+                <script>
+                    const gunlukGelirTutarlariToplami = @ViewBag.GunlukGelirTutarlariToplami;
+                    const gunlukGiderTutarlariToplami = @ViewBag.GunlukGiderTutarlariToplami;
+                    const ctx2 = document.getElementById('myChart2').getContext('2d');
+
+                    new Chart(ctx2, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Gelir', 'Gider'],
+                            datasets: [{
+                                label: 'Günlük Gelir Gider',
+                                data: [gunlukGelirTutarlariToplami, gunlukGiderTutarlariToplami],
+                                backgroundColor: [
+                                    'rgba(26,54,99,0.7)',
+                                    'rgba(244,130,32,0.7)'
+                                ],
+                                borderColor: [
+                                    'rgb(26,54,99)',
+                                    'rgb(244,130,32)'
+                                ],
+
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+            <div style="min-height: 350px;">
+                <canvas id="myChart4" height="300"></canvas>
+                <script>
+                    const gelirTutarlariToplami = @ViewBag.GelirTutarlariToplami;
+                    const giderTutarlariToplami = @ViewBag.GiderTutarlariToplami;
+                    const ctx4 = document.getElementById('myChart4').getContext('2d');
+                    new Chart(ctx4, {
+                        type: 'pie',
+                        data: {
+                            labels: ['Gelir', 'Gider'],
+
+                            datasets: [{
+                                label: 'Total Gelir Gider',
+                                data: [gelirTutarlariToplami, giderTutarlariToplami],
+
+                                backgroundColor: [
+                                    'rgba(26,54,99,0.7)',
+                                    'rgba(244,130,32,0.7)'
+                                ],
+                                borderColor: [
+                                    'rgb(54, 162, 235)',
+                                    '#F48220'
+                                ],
+
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                </script>
+                <p class="fw-bold" style="color: #1a3663;font-size:18px">Total Gelir Gider Grafiği</p>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+            
+                <div style="min-height: 350px;">
+                    <canvas id="myChart5" height="300"></canvas>
+                    <script>
+                        const taylikGelirTutarlariToplami = @ViewBag.AylikGelirTutarlariToplami;
+                        const taylikGiderTutarlariToplami = @ViewBag.AylikGiderTutarlariToplami;
+                        const ctx5 = document.getElementById('myChart5').getContext('2d');
+                        new Chart(ctx5, {
+                            type: 'pie',
+                            data: {
+                                labels: ['Gelir', 'Gider'],
+
+                                datasets: [{
+                                    label: 'Aylik Gelir Gider',
+                                    data: [taylikGelirTutarlariToplami, taylikGiderTutarlariToplami],
+                                    backgroundColor: [
+                                        'rgba(26,54,99,0.7)',
+                                        'rgba(244,130,32,0.7)'
+                                    ],
+                                    borderColor: [
+                                        'rgb(26,54,99)',
+                                        'rgb(244,130,32)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                    <p class="fw-bold" style="color: #1a3663;font-size:18px">Aylık Gelir Gider Grafiği</p>
+                </div>
+           
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+            @Html.ActionLink("Gelir Gider Kayıt İşlemleri İçin Tıklayınız", "KayitListele", "Kayit", new { area = "" }, new { @class = "btn btn-kayit px-3 py-3 d-flex align-items-center", style = "font-size:26px;min-height:300px" })
+        </div>
+    </div>
+</div>

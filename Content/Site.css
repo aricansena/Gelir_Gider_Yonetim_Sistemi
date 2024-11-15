@@ -1,0 +1,18 @@
+﻿.navbar {
+    background: linear-gradient(to right,#26344a,#1a3663);
+}
+
+.btn-kayit {
+    font-weight: bold;
+    background: linear-gradient(to right,#26344a,#1a3663);
+    border: none;
+    transition: all 0.3s ease-in-out;
+    color: white;
+    font-weight:bold;
+}
+
+    .btn-kayit:hover {
+        color: #F48220;
+        transform: scale(1.05);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.8);
+    }

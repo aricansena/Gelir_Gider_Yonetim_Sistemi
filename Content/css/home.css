@@ -1,0 +1,4 @@
+﻿/* Validation Message genişliğini modal genişliğine uyduruyoruz */
+.validation-message {
+    width: 500px; 
+}

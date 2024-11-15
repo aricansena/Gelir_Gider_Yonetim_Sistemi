@@ -31,7 +31,7 @@
     column.Add(m => m.KayitTur).Titled("Kayıt Türü");
     column.Add(m => m.KayitTarih).Titled("Tarih").Sortable(true).RenderValueAs(m => m.KayitTarih.ToString("dd/MM/yyyy"));
     column.Add(m => m.KayitAciklama).Titled("Açıklama");
-    column.Add(m => m.Tutar).Titled("Tutar").Sortable(true);
+    column.Add(m => m.Tutar).Titled("Tutar");
     column.Add().Encoded(false).Sanitized(false).SetWidth(30)
        .RenderValueAs(Model => Html.Raw(
            $"<button type='button' class='btn btn-kayit open-modal' " +

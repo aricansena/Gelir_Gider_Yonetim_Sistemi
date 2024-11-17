@@ -79,6 +79,7 @@ namespace Gelir_Gider_Yonetim_Sistemi.Controllers
             }
             return View(kayit);
         }
+
     }
 }
 

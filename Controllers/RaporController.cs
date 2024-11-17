@@ -15,7 +15,7 @@ namespace Gelir_Gider_Yonetim_Sistemi.Controllers
             return View(new List<Models.KayitGelirGider>());
         }
 
-        [HttpPost]
+    [HttpPost]
         public ActionResult GelirGiderRaporu(DateTime baslangicTarihi, DateTime bitisTarihi)
         {
             var filtreliKayitlar = KayitGelirGider.KayitList
@@ -25,12 +25,11 @@ namespace Gelir_Gider_Yonetim_Sistemi.Controllers
             if (!filtreliKayitlar.Any())
             {
                 TempData["NoDataMessage"] = "Kayıt bulunamadı.";
-                return RedirectToAction("GelirGiderRaporu");
+                return RedirectToAction("KayitListele", "Kayit");
             }
+            TempData["FilteredRecords"] = filtreliKayitlar;
             TempData["baslangicTarih"] = baslangicTarihi;
             TempData["bitisTarih"] = bitisTarihi;
-
-            TempData["FilteredRecords"] = filtreliKayitlar;
             return RedirectToAction("Rapor");
         }
 
@@ -44,17 +43,6 @@ namespace Gelir_Gider_Yonetim_Sistemi.Controllers
             }
             else
             {
-     
-                var gelirTutarlariToplami = filtreliKayitlar
-                    .Where(k => k.KayitTur == "Gelir")
-                    .Sum(k => k.Tutar);
-
-                ViewBag.GelirTutarlariToplami = gelirTutarlariToplami;
-             
-                var giderTutarlariToplami = filtreliKayitlar
-                    .Where(k => k.KayitTur == "Gider")
-                    .Sum(k => k.Tutar);
-
                 var baslangicTarihi = TempData["baslangicTarih"] as DateTime?;
                 var bitisTarihi = TempData["bitisTarih"] as DateTime?;
 
@@ -63,22 +51,54 @@ namespace Gelir_Gider_Yonetim_Sistemi.Controllers
                     ViewBag.baslangicTarih = baslangicTarihi.Value.ToString("dd.MM.yyyy");
                     ViewBag.bitisTarih = bitisTarihi.Value.ToString("dd.MM.yyyy");
                 }
-                ViewBag.GiderTutarlariToplami = giderTutarlariToplami;
+               
+                @ViewBag.TariheGoreGelirTutarlariToplami = filtreliKayitlar
+           .Where(k => k.KayitTur == "Gelir")
+           .Sum(k => k.Tutar);
 
-                var netBakiye = gelirTutarlariToplami - giderTutarlariToplami;
-                ViewBag.NetBakiye = netBakiye;
-                 
-                var tariheGoreGelirTutarlariToplami = filtreliKayitlar
-                    .Where(k => k.KayitTur == "Gelir" && k.KayitTarih>baslangicTarihi && k.KayitTarih<bitisTarihi)
+         
+                @ViewBag.TariheGoreGiderTutarlariToplami = filtreliKayitlar
+                    .Where(k => k.KayitTur == "Gider")
                     .Sum(k => k.Tutar);
 
-                @ViewBag.TariheGoreGelirTutarlariToplami = tariheGoreGelirTutarlariToplami;
-
-                var tariheGoreGiderTutarlariToplami=filtreliKayitlar
-                    .Where(k => k.KayitTur == "Gider" && k.KayitTarih > baslangicTarihi && k.KayitTarih < bitisTarihi)
-                    .Sum(k => k.Tutar); @ViewBag.TariheGoreGiderTutarlariToplami = tariheGoreGiderTutarlariToplami;
-
+                 @ViewBag.TariheGoreNetBakiye = @ViewBag.TariheGoreGelirTutarlariToplami - @ViewBag.TariheGoreGiderTutarlariToplami;
             }
+
+            return View(filtreliKayitlar ?? new List<Models.KayitGelirGider>());
+        }
+
+        public ActionResult DetayliRapor()
+        {
+
+            var filtreliKayitlar = TempData["FilteredRecords"] as List<Models.KayitGelirGider>;
+
+            if (filtreliKayitlar == null || !filtreliKayitlar.Any())
+            {
+                ViewBag.NoDataMessage = "Filtrelenmiş kayıt bulunamadı.";
+            }
+            else
+            {
+                var baslangicTarihi = TempData["baslangicTarih"] as DateTime?;
+                var bitisTarihi = TempData["bitisTarih"] as DateTime?;
+                var kayitTuru = TempData["kayitTuru"] as string;
+
+                if (baslangicTarihi.HasValue && bitisTarihi.HasValue)
+                {
+                    ViewBag.baslangicTarih = baslangicTarihi.Value.ToString("dd.MM.yyyy");
+                    ViewBag.bitisTarih = bitisTarihi.Value.ToString("dd.MM.yyyy");
+                }
+
+                ViewBag.GelirTutarlariToplami = filtreliKayitlar
+                    .Where(k => k.KayitTur == "Gelir")
+                    .Sum(k => k.Tutar);
+
+                ViewBag.GiderTutarlariToplami = filtreliKayitlar
+                    .Where(k => k.KayitTur == "Gider")
+                    .Sum(k => k.Tutar);     
+
+                ViewBag.kayitTuru = kayitTuru;
+            }
+
             return View(filtreliKayitlar ?? new List<Models.KayitGelirGider>());
         }
 
@@ -89,7 +109,6 @@ namespace Gelir_Gider_Yonetim_Sistemi.Controllers
         [HttpPost]
         public ActionResult GelirGiderDetayliRapor(DateTime baslangicTarihi, DateTime bitisTarihi, string kayitTuru)
         {
-  
             var filtreliKayitlar = KayitGelirGider.KayitList
                 .Where(k => k.KayitTarih >= baslangicTarihi && k.KayitTarih <= bitisTarihi && kayitTuru == k.KayitTur)
                 .ToList();
@@ -97,7 +116,7 @@ namespace Gelir_Gider_Yonetim_Sistemi.Controllers
             if (!filtreliKayitlar.Any())
             {
                 TempData["NoDataMessage"] = "Kayıt bulunamadı.";
-                return RedirectToAction("GelirGiderDetayliRapor");
+                return RedirectToAction("KayitListele", "Kayit");
             }
 
             TempData["FilteredRecords"] = filtreliKayitlar;
@@ -107,40 +126,6 @@ namespace Gelir_Gider_Yonetim_Sistemi.Controllers
 
             return RedirectToAction("DetayliRapor");
         }
-
-        public ActionResult DetayliRapor()
-        {
-            var filtreliKayitlar = TempData["FilteredRecords"] as List<Models.KayitGelirGider>;
-
-            if (filtreliKayitlar == null || !filtreliKayitlar.Any())
-            {
-                ViewBag.NoDataMessage = "Filtrelenmiş kayıt bulunamadı.";
-            }
-            else
-            {
-                ViewBag.GelirTutarlariToplami = filtreliKayitlar
-                    .Where(k => k.KayitTur == "Gelir")
-                    .Sum(k => k.Tutar);
-
-                ViewBag.GiderTutarlariToplami = filtreliKayitlar
-                    .Where(k => k.KayitTur == "Gider")
-                    .Sum(k => k.Tutar);
-
-                var baslangicTarihi = TempData["baslangicTarih"] as DateTime?;
-                var bitisTarihi = TempData["bitisTarih"] as DateTime?;
-                var kayitTuru = TempData["kayitTuru"] as string;
-
-                if (baslangicTarihi.HasValue && bitisTarihi.HasValue)
-                {
-                    ViewBag.baslangicTarih = baslangicTarihi.Value.ToString("dd.MM.yyyy");
-                    ViewBag.bitisTarih = bitisTarihi.Value.ToString("dd.MM.yyyy");
-                }
-                ViewBag.kayitTuru = kayitTuru;
-            }
-
-            return View(filtreliKayitlar ?? new List<Models.KayitGelirGider>());
-        }
-
     }
 }
 

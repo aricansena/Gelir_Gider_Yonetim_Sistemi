@@ -9,7 +9,7 @@
 <script src="~/Scripts/chart.min.js"></script>
 <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
     <h2>Gelir Gider Raporu Detaylı</h2>
-    <a href="@Url.Action("GelirGiderDetayliRapor", "Rapor", new { area = "" })" class="btn btn-kayit px-3 m-2">
+    <a href="@Url.Action("KayitListele", "Kayit", new { area = "" })" class="btn btn-kayit px-3">
         <i class="fa-solid fa-arrow-left"></i>
     </a>
 </div>
@@ -31,9 +31,9 @@
 
 @if (Model != null && Model.Any())
 {
-    <table class="table table-bordered">
+    <table class="table table-striped">
         <thead>
-            <tr>
+            <tr class="table-header">
                 <th>Kayıt Türü</th>
                 <th>Kayıt Tarihi</th>
                 <th>Açıklama</th>
@@ -55,7 +55,7 @@
     <div class="container">
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <div class="" style="font-size:18px">
+                <div class="sonuc">
                     @if (ViewBag.kayitTuru == "Gelir")
                     {
                         <p>Toplam Gelir: @ViewBag.GelirTutarlariToplami</p>
@@ -70,3 +70,19 @@
     </div>
 
 }
+<style>
+    .table-header {
+        background: #26344a;
+        color: white;
+    }
+
+    .sonuc {
+        background: #26344a;
+        color: white;
+        padding: 10px;
+        font-weight: bold;
+        font-size: 19px;
+        padding-top: 20px;
+        border-radius: 5px;
+    }
+</style>

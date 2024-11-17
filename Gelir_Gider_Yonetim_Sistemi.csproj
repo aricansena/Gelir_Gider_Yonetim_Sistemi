@@ -396,8 +396,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Kayit\KayitListele.cshtml" />
-    <Content Include="Views\Rapor\GelirGiderRaporu.cshtml" />
-    <Content Include="Views\Rapor\GelirGiderDetayliRapor.cshtml" />
     <Content Include="Views\Rapor\Rapor.cshtml" />
     <Content Include="Views\Rapor\DetayliRapor.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
